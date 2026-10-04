@@ -6,6 +6,17 @@
     <meta http-equiv="Cache-Control" content="no-store">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>𝙈𝙮 𝙡𝙖𝙣𝙙 ♡</title>
+    <!-- Social Preview: ค่าเริ่มต้นจะถูกอัปเดตจาก site_config/main เมื่อหน้าเว็บโหลด -->
+    <meta name="description" id="metaDescription" content="ยินดีต้อนรับสู่เว็บไซต์ของร้านค่ะ ♡">
+    <meta property="og:title" id="ogTitle" content="𝙈𝙮 𝙡𝙖𝙣𝙙 ♡">
+    <meta property="og:description" id="ogDescription" content="ยินดีต้อนรับสู่เว็บไซต์ของร้านค่ะ ♡">
+    <meta property="og:image" id="ogImage" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="ogUrl" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twitterTitle" content="𝙈𝙮 𝙡𝙖𝙣𝙙 ♡">
+    <meta name="twitter:description" id="twitterDescription" content="ยินดีต้อนรับสู่เว็บไซต์ของร้านค่ะ ♡">
+    <meta name="twitter:image" id="twitterImage" content="">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -1144,6 +1155,21 @@
                     <textarea id="admShopDesc" rows="2" class="admin-input resize-none"></textarea>
                 </div>
 
+                <div class="admin-section-title mt-4"><i class="fas fa-share-nodes"></i> รายละเอียดตอนแชร์ลิงก์</div>
+                <p class="text-[10px] text-[#7A6669] leading-relaxed">ตั้งชื่อ คำอธิบาย และรูปที่ต้องการให้ใช้เป็นข้อมูล Preview เมื่อแชร์ลิงก์ หากเว้นว่าง ระบบจะใช้ชื่อร้าน คำอธิบายร้าน และภาพปกเป็นค่าเริ่มต้นค่ะ</p>
+                <div>
+                    <label class="admin-label">ชื่อเว็บตอนแชร์:</label>
+                    <input type="text" id="admSocialTitle" class="admin-input" placeholder="ใช้ชื่อร้านอัตโนมัติถ้าเว้นว่าง">
+                </div>
+                <div>
+                    <label class="admin-label">คำอธิบายตอนแชร์:</label>
+                    <textarea id="admSocialDescription" rows="3" class="admin-input resize-none" placeholder="ใช้คำอธิบายร้านอัตโนมัติถ้าเว้นว่าง"></textarea>
+                </div>
+                <div>
+                    <label class="admin-label">รูปภาพตอนแชร์ (URL):</label>
+                    <input type="url" id="admSocialImage" class="admin-input" placeholder="https://... (ถ้าเว้นว่างจะใช้ภาพปก)">
+                </div>
+
                 <p class="text-xs text-[#7A6669]">เพิ่มหรือลบรูปทั้งหมดได้ที่แท็บ “จัดการภาพ”</p>
                 <button onclick="saveGeneralSettings()" class="w-full bg-[#D870B8] text-white font-bold py-2.5 rounded-xl shadow-sm text-xs mt-3">
                     <i class="fas fa-save mr-1"></i> บันทึกข้อความหน้าหลัก
@@ -1590,6 +1616,9 @@
             badgeText: '♡ ยินดีต้อนรับค่ะ ♡',
             shopTitle: 'ชื่อร้านของคุณ ♡',
             shopDesc: 'ยินดีต้อนรับสู่เว็บไซต์ของร้านค่ะ ♡',
+            socialTitle: '',
+            socialDescription: '',
+            socialImage: '',
             coverImg: '',
             pointsHeaderImg: '',
             queueBannerImg: '',
@@ -2534,11 +2563,34 @@
         function moveMenuEditorItem(button,direction){const box=button.closest('[data-menu-id]'),holder=box.parentElement;if(direction<0&&box.previousElementSibling)holder.insertBefore(box,box.previousElementSibling);else if(direction>0&&box.nextElementSibling)holder.insertBefore(box.nextElementSibling.nextElementSibling,box);}
         async function saveCustomizationSettings(){const old=JSON.parse(JSON.stringify(siteConfig.customization||{})),cfg=customization(),g=id=>document.getElementById(id);cfg.browserTitle=g('admBrowserTitle').value.trim();cfg.loadingTitle=g('admLoadingTitle').value.trim();cfg.loadingText=g('admLoadingText').value.trim();cfg.music={...cfg.music,url:g('admMusicUrl').value.trim(),enabled:g('admMusicEnabled').checked,autoStart:g('admMusicAutoStart').checked,loop:g('admMusicLoop').checked,volume:Number(g('admMusicVolume').value)/100};cfg.particles={...cfg.particles,enabled:g('admParticlesEnabled').checked,emojis:g('admParticleEmojis').value.trim(),intervalMs:Math.min(10000,Math.max(350,Number(g('admParticleInterval').value)||1200))};cfg.header={...cfg.header,showClock:g('admShowClock').checked,showMusicButton:g('admShowMusicButton').checked,showOrderButton:g('admShowOrderButton').checked,showCartButton:g('admShowCartButton').checked,showBottomBar:g('admShowBottomBar').checked,showCover:g('admShowCover').checked,coverSeconds:Math.min(60,Math.max(2,Number(g('admCoverSeconds').value)||5))};cfg.ui={...cfg.ui,cartTitle:g('admUiCartTitle').value.trim(),checkoutTitle:g('admUiCheckoutTitle').value.trim(),createOrderButton:g('admUiCreateOrderButton').value.trim(),lookupTitle:g('admUiLookupTitle').value.trim(),lookupButton:g('admUiLookupButton').value.trim(),reviewPrompt:g('admUiReviewPrompt').value.trim(),reviewButton:g('admUiReviewButton').value.trim(),copyToast:g('admUiCopyToast').value.trim()};cfg.mainMenu=Array.from(document.querySelectorAll('#customMainMenuEditor > [data-menu-id]')).map(box=>{const item=cfg.mainMenu.find(x=>x.id===box.dataset.menuId);return {...item,title:box.querySelector('[data-menu-title]').value.trim(),subtitle:box.querySelector('[data-menu-subtitle]').value.trim(),icon:box.querySelector('[data-menu-icon]').value.trim(),visible:box.querySelector('[data-menu-visible]').checked};});siteConfig.customization=cfg;const saved=await saveSiteConfigToFirestore();if(!saved){siteConfig.customization=old;applyCustomizationToUI();return;}updateCategoriesFromConfig();initAppGrid();applyCustomizationToUI();showToast('บันทึกการปรับแต่งเว็บแล้วค่ะ ✨');}
 
+        function getSocialPreviewValues() {
+            const title = String(siteConfig.socialTitle || siteConfig.shopTitle || defaultConfig.shopTitle || '').trim();
+            const description = String(siteConfig.socialDescription || siteConfig.shopDesc || defaultConfig.shopDesc || '').trim();
+            const image = String(siteConfig.socialImage || siteConfig.coverImg || '').trim();
+            return { title, description, image };
+        }
+
+        function updateSocialMeta() {
+            const {title, description, image} = getSocialPreviewValues();
+            const absoluteUrl = window.location.href.split('#')[0];
+            document.title = title || document.title;
+            const setAttr = (id, attr, value) => { const el = document.getElementById(id); if (el && value) el.setAttribute(attr, value); };
+            setAttr('metaDescription', 'content', description);
+            setAttr('ogTitle', 'content', title);
+            setAttr('ogDescription', 'content', description);
+            setAttr('ogImage', 'content', image);
+            setAttr('ogUrl', 'content', absoluteUrl);
+            setAttr('twitterTitle', 'content', title);
+            setAttr('twitterDescription', 'content', description);
+            setAttr('twitterImage', 'content', image);
+        }
+
         function applyConfigToUI() {
             applyThemeColors(siteConfig.themeColors);
             document.getElementById('badgeText').textContent = siteConfig.badgeText;
             document.getElementById('shopTitleText').textContent = siteConfig.shopTitle;
             document.getElementById('shopDescText').textContent = siteConfig.shopDesc;
+            updateSocialMeta();
             renderHomeCover();
             updateCategoriesFromConfig();
             initAppGrid();
@@ -3508,6 +3560,9 @@
             document.getElementById('admBadgeText').value = siteConfig.badgeText;
             document.getElementById('admShopTitle').value = siteConfig.shopTitle;
             document.getElementById('admShopDesc').value = siteConfig.shopDesc;
+            document.getElementById('admSocialTitle').value = siteConfig.socialTitle || '';
+            document.getElementById('admSocialDescription').value = siteConfig.socialDescription || '';
+            document.getElementById('admSocialImage').value = siteConfig.socialImage || '';
 
             document.getElementById('admSlipNoteText').value = siteConfig.slipNoteText;
             document.getElementById('admPromptPayNumber').value = siteConfig.promptPayNumber || '';
@@ -3609,14 +3664,23 @@
         }
 
         async function saveGeneralSettings() {
-            const previous = {badgeText:siteConfig.badgeText,shopTitle:siteConfig.shopTitle,shopDesc:siteConfig.shopDesc};
+            const previous = {
+                badgeText:siteConfig.badgeText, shopTitle:siteConfig.shopTitle, shopDesc:siteConfig.shopDesc,
+                socialTitle:siteConfig.socialTitle, socialDescription:siteConfig.socialDescription, socialImage:siteConfig.socialImage
+            };
             siteConfig.badgeText = document.getElementById('admBadgeText').value.trim();
             siteConfig.shopTitle = document.getElementById('admShopTitle').value.trim();
             siteConfig.shopDesc = document.getElementById('admShopDesc').value.trim();
+            siteConfig.socialTitle = document.getElementById('admSocialTitle').value.trim();
+            siteConfig.socialDescription = document.getElementById('admSocialDescription').value.trim();
+            siteConfig.socialImage = document.getElementById('admSocialImage').value.trim();
             if (await saveSiteConfigToFirestore()) {
-                showToast('บันทึกข้อความหน้าหลักแล้วค่ะ');
+                showToast('บันทึกข้อความและรายละเอียดตอนแชร์แล้วค่ะ ✨');
                 closeAdminPanelModal();
-            } else Object.assign(siteConfig,previous);
+            } else {
+                Object.assign(siteConfig,previous);
+                applyConfigToUI();
+            }
         }
 
         async function saveTextSettings() {
